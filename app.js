@@ -6,15 +6,9 @@ const  app = express();
 const  bodyParser = require('body-parser');
 const  mongoose = require('mongoose');
 const  session = require('express-session');
-// const quizRoute = require('./routes/quiz')
-// const  MongoStore = require('connect-mongo')(session);  
-// const fileUpload = require('express-fileupload'
-global.__basedir = __dirname + "/..";
-// const DB = "mongodb+srv://Mindbrick:password@mindbrick.zdiyp2p.mongodb.net/employe/?retryWrites=true&w=majority"
-// const DB="mongodb://localhost:27017/swapnil"
-// const db= "mongodb+srv://<DB_USER_NAME>:<DB_PASSWORD>@cluster0-vatbg.mongodb.net/registrationFormHeruko?retryWrites=true&w=majority"
-// const DB= "mongodb+srv://shu810:shu810@cluster0.xpyca.mongodb.net/swapnil?retryWrites=true&w=majority"
-// const DB= "mongodb+srv://Mindbrick:Password@mindbrick.zdiyp2p.mongodb.net/swapnil?retryWrites=true&w=majority"
+const MongoStore = require('connect-mongo')
+
+
 const DB = "mongodb+srv://shu810:shu810@cluster0.uub44.mongodb.net/quizdb?retryWrites=true&w=majority"
 
 mongoose.connect(DB, {
@@ -23,6 +17,26 @@ mongoose.connect(DB, {
   })
     .then(() => console.log('Connected to MongoDB'))
     .catch((error) => console.error(error));
+
+const  db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+});
+
+//session authentication....
+app.use(session({
+  secret: 'foo',
+  saveUninitialized: false, // don't create session until something stored
+  resave: false, //don't save session if unmodified
+  store: MongoStore.create({
+    mongoUrl:DB,
+    touchAfter: 24 * 3600,
+    autoRemove:'interval',
+    autoRemoveInterval:10 //in minutes--
+  })
+}));
+
+global.__basedir = __dirname + "/..";
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');	

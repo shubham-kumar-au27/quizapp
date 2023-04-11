@@ -16,11 +16,13 @@ resultSchema = new Schema( {
     },
     marks:{
         type:Number,
-        required:true
+        // required:true
+        default:0
     },
     result:{
         type:String,
-        required:true
+        default:'pending'
+
     },
     date :{ type : Date, default: Date.now }
 })
