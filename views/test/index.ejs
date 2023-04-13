@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    #quiz-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.option {
+  display: block;
+  margin: 10px 0;
+}
+
+
+
+    .quiz-question {
+      margin-bottom: 1rem;
+      font-weight: bold;
+    }
+    .quiz-option {
+      margin-bottom: 0.5rem;
+    }
+    .quiz-option input[type="radio"] {
+      margin-right: 0.5rem;
+    }
+    /* CSS for pagination buttons */
+#pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#pagination-container button {
+  background-color: #008CBA;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+#pagination-container button[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}
+</style>
+<body>
+    <header style="background-color: navy; color: aliceblue; margin-top: -10px; height: 40px;margin-top: -10px;">
+        <h3>Welcome</h3>
+    </header>
+    <div id="quiz-container" > 
+
+
+        <button id="submit-btn"  style="background-color: yellowgreen; margin-left: 730px;  margin-top: 40px; display:none;">submit</button>
+    </div>
+    <div id="pagination-container"></div>
+</body>
+<script>
+  const questions = JSON.parse(`<%- question %>`)
+
+  const questionsleft = questions.slice(1,questions.length)
+
+  console.log(questionsleft)
+
+
+    const quizBox = document.getElementById("quiz-container")
+
+    let question = ""
+
+  question = `
+      <div id="quizquestion">
+        <p>${questionsleft[0].question}</p>
+        </div>
+    `
+  
+    questionsleft[0].options.forEach((option)=>{
+      question += `
+          <div class="quiz-option">
+            <input  type="radio" name="answer${questionsleft[0]._id}" value="${option}"}>
+            <label for="answer${questionsleft[0]._id}${option}">${option}</label>
+          </div>
+          `;
+      
+    })
+   
+
+    quizBox.innerHTML = question
+    
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+</script>
+</html>

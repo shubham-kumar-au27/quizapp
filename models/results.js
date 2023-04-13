@@ -2,27 +2,25 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 resultSchema = new Schema( {
-    Name:{
+    emailId:{
         type:String,
-        required: true,
+        required:true
     },
-    Rollno:{
+    totalMarks:{
         type:Number,
         required:true
     },
-    status:{
-        type:String,
-        default:"unregistered"
-    },
-    marks:{
+    marksObtained:{
         type:Number,
-        // required:true
         default:0
     },
-    result:{
+    testStatus:{
         type:String,
         default:'pending'
-
+    },
+    questionsAttempted:{
+        type:Number,
+        default:0
     },
     date :{ type : Date, default: Date.now }
 })

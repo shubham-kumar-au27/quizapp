@@ -7,6 +7,8 @@ const  bodyParser = require('body-parser');
 const  mongoose = require('mongoose');
 const  session = require('express-session');
 const MongoStore = require('connect-mongo')
+const passport = require('passport')
+const {initializingPassport} = require('./config/passportConfig')
 
 
 const DB = "mongodb+srv://shu810:shu810@cluster0.uub44.mongodb.net/quizdb?retryWrites=true&w=majority"
@@ -31,10 +33,14 @@ app.use(session({
   store: MongoStore.create({
     mongoUrl:DB,
     touchAfter: 24 * 3600,
+    auto_reconnect: true,
     autoRemove:'interval',
-    autoRemoveInterval:10 //in minutes--
+    autoRemoveInterval:10 //in minutes----
   })
 }));
+initializingPassport(passport)
+app.use(passport.initialize())
+app.use(passport.session())
 
 global.__basedir = __dirname + "/..";
 
@@ -43,6 +49,8 @@ app.set('view engine', 'ejs');
 // app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
 
 app.use(express.static(__dirname + '/views'));
 app.set('view engine', 'ejs');
