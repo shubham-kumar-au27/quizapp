@@ -35,10 +35,15 @@ const Candidates = require('../models/user')
 
             },
             async startTest(req,res){
-                const useremail = req.user.username
-                const userId = req.user._id
-                let totalQuestions ;
-                
+                const useremail = req.user.username;
+                const userId = req.user._id;
+                let totalQuestions;
+                Results.findOne({emailId:useremail}).then((data)=>{
+                    if (data){
+                        return res.send('You Have Already Appeared in this Test..')
+                    }
+                    
+                req.session.testStatus = "active"
                 questions.find({}).then((data)=>{
                     totalQuestions = data.length
 
@@ -54,9 +59,18 @@ const Candidates = require('../models/user')
 
                 })
                 .catch(err => console.log(err))
+                }).catch(err => console.log(err))
+
+            },
+            async updateMarks(req,res){
+                const marksobtained = req.body.marks
+                const userid = req.user.username
+                Results.findOneAndUpdate(
+                    { emailId: userid },
+                    { $inc: { questionsAttempted: 1, marksObtained: marksobtained } },
+                    { new: true },
+                ).then(result => res.send(result)).catch(err => res.send(err))
             }
     }
     }
-
-
 module.exports = quizController

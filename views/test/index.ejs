@@ -61,21 +61,33 @@
 </style>
 <body>
     <header style="background-color: navy; color: aliceblue; margin-top: -10px; height: 40px;margin-top: -10px;">
+      <div style="display: flex;">
         <h3>Welcome</h3>
+        <a href="/logout" style="margin-left: 1300px; text-decoration: none; color: #f2f2f2;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+          </svg>
+        </a>
+      </div>
     </header>
     <div id="quiz-container" > 
-
-
-        <button id="submit-btn"  style="background-color: yellowgreen; margin-left: 730px;  margin-top: 40px; display:none;">submit</button>
     </div>
-    <div id="pagination-container"></div>
+    <div style="display: flex; justify-content:center">
+      <button  id="submit-btn"  style="background-color: yellowgreen;">Next</button>
+    </div>
 </body>
 <script>
+
   const questions = JSON.parse(`<%- question %>`)
 
-  const questionsleft = questions.slice(1,questions.length)
 
-  console.log(questionsleft)
+  axios.get('/questionUpdate').then((res)=>{
+    const attempted = res.data.questionsAttempted
+
+    const questionsleft = questions.slice(attempted,questions.length)
+
+  
 
 
     const quizBox = document.getElementById("quiz-container")
@@ -84,39 +96,50 @@
 
   question = `
       <div id="quizquestion">
-        <p>${questionsleft[0].question}</p>
+        <p>${questionsleft[0].question} <span>?</span></p>
+        <input id="answer" name="answer" value="${questionsleft[0].correctanswer}" hidden>
         </div>
     `
-  
     questionsleft[0].options.forEach((option)=>{
       question += `
           <div class="quiz-option">
-            <input  type="radio" name="answer${questionsleft[0]._id}" value="${option}"}>
+            <input class="selectedoption"  type="radio" name="answer${questionsleft[0]._id}" value="${option}"}/>
             <label for="answer${questionsleft[0]._id}${option}">${option}</label>
           </div>
           `;
-      
     })
-   
-
     quizBox.innerHTML = question
+
     
+    function submitAnswer(){
+    let marksobtained = 0;
+    let questionAttempted = 0
+    const selectedOption = document.querySelector(`input[name="answer${questionsleft[0]._id}"]:checked`).value; 
+    const correctAnswer = document.getElementById('answer').value
 
+    if (selectedOption == correctAnswer){
+      marksobtained = 1
+      // questionAttempted = 1
 
+    }else{
+      marksobtained = 0
+      questionAttempted = 1
+    }
 
+    axios.post('/updateMarks',{marks:marksobtained}).then(
+      window.parent.location.reload()
+    )
+    }
 
+    const submitbtn = document.getElementById('submit-btn')
 
+    submitbtn.addEventListener('click',submitAnswer)
+    
+  })  
+//const submitBtn = document.getElementById('submit-btn')
 
-
-
-
-  
-
-
-
-
-
-
+    
+   
 
 </script>
 </html>
