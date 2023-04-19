@@ -5,12 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <title>Document</title>
+    <link href="lib/noty.css" rel="stylesheet">
+    <script src="lib/noty.js" type="text/javascript"></script>
+    <title>Questions</title>
 </head>
 <style>
-    #quiz-container {
+  .header{
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 10px 5px 5px red;
+    border: 1px solid black
+}
+.logo{
+    width: 90px;
+}
+.nav-items > ul{
+    display: flex;
+}
+.nav-items > ul > li{
+    list-style: none;
+    padding: 10px;
+    margin: 10px;
+}
+#quiz-container {
+  margin-left: 300px;
+  margin-top: 100px;
   max-width: 800px;
-  margin: 0 auto;
   padding: 20px;
   background-color: #f2f2f2;
   border-radius: 5px;
@@ -39,65 +59,156 @@
       margin-right: 0.5rem;
     }
     /* CSS for pagination buttons */
-#pagination-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
 
-#pagination-container button {
-  background-color: #008CBA;
-  color: white;
-  border: none;
-  padding: 10px;
-  margin: 0 5px;
-  cursor: pointer;
-}
-
-#pagination-container button[disabled] {
-  opacity: 0.5;
-  cursor: default;
-}
 </style>
 <body>
-    <header style="background-color: navy; color: aliceblue; margin-top: -10px; height: 40px;margin-top: -10px;">
-      <div style="display: flex;">
-        <h3>Welcome</h3>
-        <a href="/logout" style="margin-left: 1300px; text-decoration: none; color: #f2f2f2;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
-            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-          </svg>
-        </a>
-      </div>
-    </header>
-    <div id="quiz-container" > 
+  <div class='header'>
+    <div class='logo-container'>
+        <img class='logo' src="../public//mindbrinklogo.jpg"/>
     </div>
-    <div style="display: flex; justify-content:center">
-      <button  id="submit-btn"  style="background-color: yellowgreen;">Next</button>
+    <div class='nav-items'>
+        <ul>
+        <!-- <li>Home</li>
+        <li>About us</li>
+        <li>ContactUs</li>
+        <li>Cart</li> -->
+        </ul>
+    </div>
+</div>
+<div id="timer" style="margin-top: 50px;"> TIMER</div>
+    <div id="directions" style="display: none;">
+      <h4>Read the below-mentioned puzzle and solve the questions that follow </h4>
+      <p>Aadhya, Bhavya, Chaitra, Durga, Esther, and Fathima are the interviewers in a process that awards funding for new initiatives. Every interviewer individually interviews each of the candidates individually and awards a token only if she recommends funding. 
+        A token has a face value of 2, 3, 5, 7, 11, or 13. Each interviewer awards tokens of a single face value only. Once all six interviews are over for a candidate, the candidate receives funding that is Rs.1000 times the product of the face values of all the tokens. For example, if a candidate has tokens with face values 2, 5, and 7, then they get funding of Rs.1000 * (2 * 5 * 7) = Rs.70,000.
+        Pavitra Naresh, Quereshi, Rashmika, Shreya, and Tamanna were the five candidates who received funding.
+        The funds they received, in descending order, were Rs. 390,000, Rs.210,000, Rs.165,000, Rs.77,000, and Rs.66,000.
+<h5>The following additional facts are known:</h5>
+ <p>1.Fathima awarded tokens to everyone except Quereshi, while Aadhya awarded tokens to no one except Pavitra Naresh.</p> 
+ <p>2.Rashmika received the highest number of tokens that anyone received, but she did not receive one from Esther.</p> 
+<p> 3.Bhavya awarded a token to Shreya but not to Quereshi, while Durga awarded a token to Quereshi but not to Shreya.</p>
+ </p>
+    </div>
+    <div id="directions2" style="display: none;">
+      <h4>Read the following information carefully and answer the questions given below:</h4>
+      <ul>
+        <li>P, Q, R, S, T, U and V are sitting around a circular table facing the centre.</li>
+        <li>R is next to the left of U and V is second to the left of R.</li>
+        <li>P is sitting third to the left of T.</li>
+        <li>Q is between S and T.</li>
+      </ul>
+    </div>
+    <div id="directions3" style="display: none;">
+      
+      <h4>There is a group of six students M, N, O, P, Q and R in a class. Each of the six students opts for two subjects, one compulsory and the other optional subject.</h4>
+      <ul>
+        <li>P's optional subject was Geography while three others have it as a compulsory subject.</li>
+        <li>Q and R have Chemistry as one of their subjects.</li>
+        <li>R's compulsory subject is Physics which is an optional subject of both O and Q.</li>
+        <li>Geography and English are M's subjects, as compulsory and optional respectively.</li>
+        <li>Biology is an optional subject of only one of them.</li>
+        <li>The only female student in the group is the one who has Geography as the optional subject and English as the compulsory one.</li>
+      </ul>
+    </div>
+    <div id="directions4" style="display: none;">
+      <h4>Below given chart provides information of the yearly sales of three companies A, B and C for the year 2009 to 2013. Use the chart to answer the following questions(25-26).</h4>
+      <img src="../public/graph.png">
+    </div>
+    <div id="quiz-container"> 
+    </div>
+    <div style="display: flex; margin: 80px; justify-content:center">
+      <button  id="submit-btn"  style="cursor:pointer;height: 40px ;width: 60px;background-color: black; color: white;">Next</button>
     </div>
 </body>
 <script>
+// Set the time limit to 30 minutes (in milliseconds)
+const timeLimit = 30 * 600 * 1000;
 
+  const quizBox = document.getElementById("quiz-container")
+  // Function to submit the quiz
+function submitQuiz() {
+  // Code to submit the quiz goes here
+  console.log("Quiz submitted!");
+  alert("You Have Successfully Completed Your Exam !");
+}
+
+// Start or resume the timer
+let startTime = sessionStorage.getItem("startTime");
+if (!startTime) {
+  startTime = Date.now();
+  sessionStorage.setItem("startTime", startTime);
+}
+let timeElapsed = Date.now() - startTime;
+if (timeElapsed >= timeLimit) {
+  // Timer has already expired, hide quiz container
+  quizBox.style.display = "none";
+} else {
+  // Timer still running, update the timer display
+  let timeLeft = timeLimit - timeElapsed;
+  const timerDiv = document.getElementById("timer");
+  const updateTimer = () => {
+    timeLeft -= 1000;
+//     const remainingTimeInMinutes = Math.floor(remainingTime / ); 
+// const remainingTimeInSeconds = Math.floor((remainingTime % ) / 1000); // Convert remaining milliseconds to seconds
+// const formattedTime = `${remainingTimeInMinutes.toString().padStart(2, '0')}:${remainingTimeInSeconds.toString().padStart(2, '0')}mins`;
+    const minutes = Math.floor(timeLeft / 60000);// Convert milliseconds to minutes
+    const seconds = Math.floor((timeLeft % 10000) / 1000);
+    const formattedTime = `${timeLeft.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}mins`;
+    timerDiv.textContent = `Time left: ${
+      formattedTime
+    }`;
+  };
+  updateTimer();
+  setInterval(updateTimer, 1000);
+  setTimeout(() => {
+    // Remove start time from session storage and redirect to logout page after timeout
+    sessionStorage.removeItem("startTime");
+    window.location.href = "/logout";
+  }, timeLeft);
+}
+
+// Hide the quiz container when the timer ends
+setTimeout(() => {
+  quizBox.style.display = "none";
+}, timeLimit);
   const questions = JSON.parse(`<%- question %>`)
-
-
   axios.get('/questionUpdate').then((res)=>{
     const attempted = res.data.questionsAttempted
 
+    
+
     const questionsleft = questions.slice(attempted,questions.length)
 
-  
+    if (!questionsleft.length){
+      window.alert("You have successfully completed Your Test..")
+      axios.get('/logout')
+      window.parent.location.reload()
+    }
+    if (questionsleft[0].directions){
+      //hide unhide directions---
+    if (attempted < 5){
+      const directions = document.getElementById("directions")
+      directions.style.display = "block"
+    }
+    else if (attempted >= 7 && attempted < 9){
+      const directions2 = document.getElementById("directions2")
+      directions2.style.display = "block"
 
-
-    const quizBox = document.getElementById("quiz-container")
-
+    }else if (attempted >= 12 && attempted < 17){
+      const directions3 = document.getElementById("directions3")
+      directions3.style.display = "block"
+      
+    }else if (attempted >= 24 && attempted < 26){
+      const directions4 = document.getElementById("directions4")
+      directions4.style.display = "block"
+    }
+    }
     let question = ""
 
   question = `
       <div id="quizquestion">
-        <p>${questionsleft[0].question} <span>?</span></p>
+        <span>?]${attempted+1}</span><p>${questionsleft[0].question} <span>?</span></p>
         <input id="answer" name="answer" value="${questionsleft[0].correctanswer}" hidden>
+        <input id="marks" name="answer" value="${questionsleft[0].marks}" hidden>
         </div>
     `
     questionsleft[0].options.forEach((option)=>{
@@ -116,9 +227,10 @@
     let questionAttempted = 0
     const selectedOption = document.querySelector(`input[name="answer${questionsleft[0]._id}"]:checked`).value; 
     const correctAnswer = document.getElementById('answer').value
+    const score = document.getElementById('marks').value
 
     if (selectedOption == correctAnswer){
-      marksobtained = 1
+      marksobtained = score
       // questionAttempted = 1
 
     }else{
@@ -129,17 +241,13 @@
     axios.post('/updateMarks',{marks:marksobtained}).then(
       window.parent.location.reload()
     )
-    }
+}
 
     const submitbtn = document.getElementById('submit-btn')
 
     submitbtn.addEventListener('click',submitAnswer)
     
   })  
-//const submitBtn = document.getElementById('submit-btn')
-
-    
-   
-
+// const submitBtn = document.getElementById('submit-btn')
 </script>
 </html>

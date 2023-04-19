@@ -89,25 +89,23 @@
 <body>
 	<h1>Registration form</h1>
 	<div class="form-container">
-<form action ='/'method='post' name="registerForm" id="form1" enctype="multipart/form-data">
+<form action ='/register'method='post'>
 		<label for="firstName">Name *</label>
 		<input type="text"  id="Name" name="name" placeholder="John" required/><p class="error-message"></p>
 		<label for="College">College *</label>
-		<input type="text" id="lastName" name="college"placeholder="" required/>
+		<input type="text"  name="college"placeholder="" required/>
 		<p class="error-message"></p>
 		<label for="e-mail">Email Id *</label>
-		<input type="email" id ="date_of_birth"name='email' placeholder="abd@gmail.com"required/>
+		<input type="email"name='email' placeholder="abd@gmail.com"required/>
 		<p class="error-message"></p>
 		<label for="Mobile">Mobile Number *</label>
-		<input  type ='text'id ="designation" name='mobile' placeholder="" required />
+		<input  type ='text' name='mobile' placeholder="" required />
 		<p class="error-message"></p>
 		<label for="teamLeader">Roll Number *</label>
-		<input  type ='text'id ="teamLeader"name='rollno' placeholder="" required/>
+		<input  type ='text' name='rollno' placeholder="" required/>
 		<p class="error-message"></p>
-		<input id="loginbtn" class="button" type="submit" value="submit" name="submit" />
+		<input id="loginbtn" class="button" type="submit"  name="submit" />
 		</div>
-		
-
 </form>
 <div class="mssg bg-danger">
 	<span id="check"></span>
